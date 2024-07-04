@@ -1,37 +1,6 @@
-const socket = io();
-
-let roomCode = '';
 let participants = [];
-let maxElements = 5;
 let items = [];
-
-function createRoom() {
-    socket.emit('createRoom');
-}
-
-socket.on('roomCreated', (code) => {
-    roomCode = code;
-    alert(`Salle créée avec le code : ${roomCode}`);
-    document.getElementById('participant-name').style.display = 'none';
-});
-
-function joinRoom() {
-    const code = document.getElementById('room-code').value;
-    const participantName = document.getElementById('participant-name').value;
-    if (code && participantName) {
-        socket.emit('joinRoom', code, participantName);
-    }
-}
-
-socket.on('updateParticipants', (participantsList) => {
-    participants = participantsList;
-    updateParticipantsList();
-    updateParticipantDropdown();
-});
-
-socket.on('error', (message) => {
-    alert(message);
-});
+let maxElements = 5;
 
 function addParticipant() {
     const participantName = document.getElementById('participant-name').value;
@@ -73,7 +42,7 @@ function reset() {
     items = [];
     maxElements = 5;
     document.getElementById('participants').innerHTML = '';
-    document.getElementById('draw-result').textContent = '';
+    document.getElementById('result').textContent = '';
     updateParticipantDropdown();
 }
 
@@ -82,15 +51,10 @@ function addItem() {
     const itemContent = document.getElementById('item-content').value;
     const itemParticipant = document.getElementById('item-participant').value;
     if (itemContent && itemParticipant && items.length < maxElements) {
-        const item = { type: itemType, content: itemContent, participant: itemParticipant };
-        socket.emit('addItem', roomCode, item);
+        items.push({ type: itemType, content: itemContent, participant: itemParticipant });
         document.getElementById('item-content').value = '';
     }
 }
-
-socket.on('updateItems', (itemsList) => {
-    items = itemsList;
-});
 
 function goToDrawPage() {
     document.getElementById('home').style.display = 'none';
@@ -114,14 +78,12 @@ function drawItem() {
     document.getElementById('loading-animation').style.display = 'block';
 
     setTimeout(() => {
-        socket.emit('drawItem', roomCode);
+        const randomIndex = Math.floor(Math.random() * items.length);
+        const randomItem = items.splice(randomIndex, 1)[0];
+        const resultDiv = document.getElementById('draw-result');
+        const resultItem = document.createElement('div');
+        resultItem.textContent = `${randomItem.participant}, tu as ${randomItem.type} : ${randomItem.content}`;
+        resultDiv.appendChild(resultItem);
+        document.getElementById('loading-animation').style.display = 'none';
     }, 1000);
 }
-
-socket.on('itemDrawn', (item) => {
-    const resultDiv = document.getElementById('draw-result');
-    const resultItem = document.createElement('div');
-    resultItem.textContent = `${item.participant}, tu as ${item.type} : ${item.content}`;
-    resultDiv.appendChild(resultItem);
-    document.getElementById('loading-animation').style.display = 'none';
-});
