@@ -1,92 +1,62 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #c6efc6;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Défis - Salle de Jeu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="home" class="container">
+        <div class="rules">
+            <h2>Jeu de Défis - Salle de Jeu</h2>
+            <h3>Règles</h3>
+            <p>Voici les règles du jeu :</p>
+            <p>Ajoutez chaque participant et définissez ensemble le nombre maximum d'éléments. Ensuite, chacun pourra écrire, sans que les autres regardent, un défi, une anecdote sur quelqu'un, ou une question.</p>
+        </div>
+        <div class="participant">
+            <h3>Ajouter un participant</h3>
+            <input type="text" id="participant-name" placeholder="Nom du participant">
+            <button onclick="addParticipant()">Ajouter</button>
+        </div>
+        <div class="participants-list">
+            <h3>Liste des Participants</h3>
+            <ul id="participants"></ul>
+        </div>
+        <div class="settings">
+            <h3>Paramètres</h3>
+            <label for="max-elements">Nombre maximum d'éléments :</label>
+            <input type="number" id="max-elements" value="5">
+            <button onclick="defineMaxElements()">Définir</button>
+            <button onclick="reset()">Réinitialiser</button>
+        </div>
+        <div class="add-item">
+            <h3>Ajouter un défi, une anecdote ou une question</h3>
+            <select id="item-type">
+                <option value="Défi">Défi</option>
+                <option value="Anecdote">Anecdote</option>
+                <option value="Question">Question</option>
+            </select>
+            <input type="text" id="item-content" placeholder="Entrez un défi, une anecdote ou une question">
+            <select id="item-participant">
+                <!-- Les participants seront ajoutés ici dynamiquement -->
+            </select>
+            <button onclick="addItem()">Ajouter</button>
+        </div>
+        <div class="draw">
+            <h3>Tirer au sort</h3>
+            <button onclick="goToDrawPage()">Tirer au sort</button>
+        </div>
+    </div>
 
-.container {
-    background-color: #fff6d1;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
+    <div id="draw-page" class="container" style="display: none;">
+        <h2>Page de Tirage au Sort</h2>
+        <button onclick="drawItem()">Tirer un élément</button>
+        <div id="draw-result"></div>
+        <div id="loading-animation" class="loading-animation" style="display: none;">Chargement...</div>
+        <button onclick="backToHome()">Retour à l'accueil</button>
+    </div>
 
-.resized-image {
-    max-width: 100%; /* La largeur maximale sera de 100% du conteneur */
-    max-height: 200px; /* Hauteur maximale */
-    height: auto; /* La hauteur s'ajustera automatiquement pour garder les proportions */
-    display: block;
-    margin: 0 auto 20px auto;
-    border-radius: 10px; /* Optionnel : pour arrondir les coins de l'image */
-}
-
-h2, h3 {
-    text-align: center;
-    color: #333;
-}
-
-.rules, .participant, .participants-list, .settings, .add-item, .draw {
-    margin-bottom: 20px;
-}
-
-input[type="text"], input[type="number"], select {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #ff66b2;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #ff4da6;
-}
-
-#draw-result {
-    margin-top: 20px;
-    text-align: center;
-    font-weight: bold;
-    font-size: x-large; 
-}
-
-.loading-animation {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-}
-
-.loading-animation::after {
-    content: " ";
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border-radius: 50%;
-    border: 6px solid #ff66b2;
-    border-color: #ff66b2 transparent #ff66b2 transparent;
-    animation: loading-animation 1.2s linear infinite;
-}
-
-@keyframes loading-animation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
+    <script src="script.js"></script>
+</body>
+</html>
