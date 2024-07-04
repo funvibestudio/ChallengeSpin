@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #c6efc6;
     margin: 0;
     display: flex;
@@ -14,16 +14,6 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
-    text-align: center;
-}
-
-.resized-image {
-    max-width: 100%; /* La largeur maximale sera de 100% du conteneur */
-    max-height: 200px; /* Hauteur maximale */
-    height: auto; /* La hauteur s'ajustera automatiquement pour garder les proportions */
-    display: block;
-    margin: 0 auto 20px auto;
-    border-radius: 10px; /* Optionnel : pour arrondir les coins de l'image */
 }
 
 h2, h3 {
@@ -61,7 +51,6 @@ button:hover {
     margin-top: 20px;
     text-align: center;
     font-weight: bold;
-    font-size: x-large; 
 }
 
 .loading-animation {
