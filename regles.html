@@ -1,13 +1,108 @@
-<div class="rules">
-    <h2>ChallengeSpin</h2>
-    <h3>Règles</h3>
-    <p>Voici les règles du jeu :</p>
-    <ol>
-        <li>Entrez les noms des participants ci-dessous.</li>
-        <li>Définissez le nombre total de défis et de questions que vous souhaitez inclure.</li>
-        <li>Les participants seront appelés tour à tour pour ajouter des défis ou des questions.</li>
-        <li>Une fois tous les éléments ajoutés, vous pourrez tirer au sort pour chaque participant.</li>
-    </ol>
-    <p>Amusez-vous bien !</p>
-    <button><a href="regles.html" id="rules-link">Lire les règles du jeu</a></button>
-</div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChallengeSpin - Règles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c6efc6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff6d1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .rules, .participant, .participants-list, .settings, .add-item, .draw {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff66b2;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff4da6;
+        }
+
+        #draw-result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .loading-animation {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+        }
+
+        .loading-animation::after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid #ff66b2;
+            border-color: #ff66b2 transparent #ff66b2 transparent;
+            animation: loading-animation 1.2s linear infinite;
+        }
+
+        @keyframes loading-animation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="rules">
+            <h2>ChallengeSpin</h2>
+            <h3>Règles</h3>
+            <p>Voici les règles du jeu :</p>
+            <ol>
+                <li>Entrez les noms des participants ci-dessous.</li>
+                <li>Définissez le nombre total de défis et de questions que vous souhaitez inclure.</li>
+                <li>Les participants seront appelés tour à tour pour ajouter des défis ou des questions.</li>
+                <li>Une fois tous les éléments ajoutés, vous pourrez tirer au sort pour chaque participant.</li>
+            </ol>
+            <p>Amusez-vous bien !</p>
+            <button><a href="regles.html" id="rules-link">Lire les règles du jeu</a></button>
+        </div>
+    </div>
+</body>
+</html>
