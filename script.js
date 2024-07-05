@@ -2,11 +2,13 @@ let participants = [];
 let items = [];
 let maxElements = 5;
 let currentParticipantIndex = 0;
+let elementsPerParticipant = [];
 
 function addParticipant() {
     const participantName = document.getElementById('participant-name').value;
     if (participantName) {
         participants.push(participantName);
+        elementsPerParticipant.push(Math.floor(maxElements / participants.length)); // Assign an equal number of elements per participant
         updateParticipantsList();
         updateParticipantDropdown();
         document.getElementById('participant-name').value = '';
@@ -36,6 +38,7 @@ function updateParticipantDropdown() {
 
 function defineMaxElements() {
     maxElements = parseInt(document.getElementById('max-elements').value);
+    elementsPerParticipant = participants.map(() => Math.floor(maxElements / participants.length));
 }
 
 function reset() {
@@ -43,6 +46,7 @@ function reset() {
     items = [];
     maxElements = 5;
     currentParticipantIndex = 0;
+    elementsPerParticipant = [];
     document.getElementById('participants').innerHTML = '';
     document.getElementById('result').textContent = '';
     updateParticipantDropdown();
@@ -51,16 +55,19 @@ function reset() {
 function addItem() {
     const itemType = document.getElementById('item-type').value;
     const itemContent = document.getElementById('item-content').value;
-    if (itemContent && participants.length > 0 && items.length < maxElements) {
-        const itemParticipant = participants[currentParticipantIndex];
-        items.push({ type: itemType, content: itemContent, participant: itemParticipant });
-        document.getElementById('item-content').value = '';
-        
-        // Mise à jour de l'index du participant actuel pour le prochain élément
-        currentParticipantIndex = (currentParticipantIndex + 1) % participants.length;
-        alert(`Élément ajouté pour ${itemParticipant}`);
+    if (itemContent && participants.length > 0) {
+        const currentParticipant = participants[currentParticipantIndex];
+        if (elementsPerParticipant[currentParticipantIndex] > 0) {
+            items.push({ type: itemType, content: itemContent, participant: currentParticipant });
+            document.getElementById('item-content').value = '';
+            elementsPerParticipant[currentParticipantIndex] -= 1;
+            currentParticipantIndex = (currentParticipantIndex + 1) % participants.length;
+            alert(`Élément ajouté pour ${currentParticipant}`);
+        } else {
+            alert(`${currentParticipant} a déjà ajouté tous ses éléments.`);
+        }
     } else {
-        alert('Contenu de l\'élément vide, aucun participant ajouté ou nombre maximum d\'éléments atteint.');
+        alert('Contenu de l\'élément vide ou aucun participant ajouté.');
     }
 }
 
