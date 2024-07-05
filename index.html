@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChallengeSpin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="home" class="container">
+        <div class="rules">
+            <h2>ChallengeSpin</h2>
+            <h3>Règles</h3>
+            <p>Voici les règles du jeu :</p>
+            <button><a href="regles.html" id="rules-link" >Lire les règles du jeu</a></button>
+        </div>
+        <div class="participant">
+            <h3>Ajouter un participant</h3>
+            <input type="text" id="participant-name" placeholder="Nom du participant">
+            <button onclick="addParticipant()">Ajouter</button>
+        </div>
+        <div class="participants-list">
+            <h3>Liste des Participants</h3>
+            <ul id="participants"></ul>
+        </div>
+        <div class="settings">
+            <h3>Paramètres</h3>
+            <label for="max-elements">Nombre maximum d'éléments :</label>
+            <input type="number" id="max-elements" value="5">
+            <button onclick="defineMaxElements()">Définir</button>
+            <button onclick="reset()">Réinitialiser</button>
+        </div>
+        <div class="add-item">
+            <h3>Ajouter un défi, une anecdote ou une question</h3>
+            <select id="item-type">
+                <option value="Défi">Défi</option>
+                <option value="Anecdote">Anecdote</option>
+                <option value="Question">Question</option>
+            </select>
+            <input type="text" id="item-content" placeholder="Entrez un défi, une anecdote ou une question">
+            <select id="item-participant">
+                <!-- Les participants seront ajoutés ici dynamiquement -->
+            </select>
+            <button onclick="addItem()">Ajouter</button>
+        </div>
+        <div class="draw">
+            <h3>Tirer au sort</h3>
+            <button onclick="goToDrawPage()">Tirer au sort</button>
+        </div>
+    </div>
+
+    <div id="draw-page" class="container" style="display: none;">
+        <h2>Page de Tirage au Sort</h2>
+        <button onclick="drawItem()">Tirer un élément</button>
+        <div id="draw-result"></div>
+        <div id="loading-animation" class="loading-animation" style="display: none;">Chargement...</div>
+        <button onclick="backToHome()">Retour à l'accueil</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // JavaScript pour activer le lien vers les règles
+        const rulesLink = document.getElementById('rules-link');
+        rulesLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            window.location.href = this.getAttribute('href'); // Redirige vers la page des règles
+        });
+    </script>
+</body>
+</html>
