@@ -1,6 +1,7 @@
 let participants = [];
 let items = [];
 let maxElements = 5;
+let currentParticipantIndex = 0;
 
 function addParticipant() {
     const participantName = document.getElementById('participant-name').value;
@@ -41,24 +42,23 @@ function reset() {
     participants = [];
     items = [];
     maxElements = 5;
+    currentParticipantIndex = 0;
     document.getElementById('participants').innerHTML = '';
     document.getElementById('result').textContent = '';
     updateParticipantDropdown();
-}
-
-function getRandomParticipant() {
-    const randomIndex = Math.floor(Math.random() * participants.length);
-    return participants[randomIndex];
 }
 
 function addItem() {
     const itemType = document.getElementById('item-type').value;
     const itemContent = document.getElementById('item-content').value;
     if (itemContent && participants.length > 0 && items.length < maxElements) {
-        const randomParticipant = getRandomParticipant();
-        items.push({ type: itemType, content: itemContent, participant: randomParticipant });
+        const itemParticipant = participants[currentParticipantIndex];
+        items.push({ type: itemType, content: itemContent, participant: itemParticipant });
         document.getElementById('item-content').value = '';
-        alert(`Élément ajouté pour ${randomParticipant}`);
+        
+        // Mise à jour de l'index du participant actuel pour le prochain élément
+        currentParticipantIndex = (currentParticipantIndex + 1) % participants.length;
+        alert(`Élément ajouté pour ${itemParticipant}`);
     } else {
         alert('Contenu de l\'élément vide, aucun participant ajouté ou nombre maximum d\'éléments atteint.');
     }
