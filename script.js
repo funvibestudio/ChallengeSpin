@@ -46,13 +46,21 @@ function reset() {
     updateParticipantDropdown();
 }
 
+function getRandomParticipant() {
+    const randomIndex = Math.floor(Math.random() * participants.length);
+    return participants[randomIndex];
+}
+
 function addItem() {
     const itemType = document.getElementById('item-type').value;
     const itemContent = document.getElementById('item-content').value;
-    const itemParticipant = document.getElementById('item-participant').value;
-    if (itemContent && itemParticipant && items.length < maxElements) {
-        items.push({ type: itemType, content: itemContent, participant: itemParticipant });
+    if (itemContent && participants.length > 0 && items.length < maxElements) {
+        const randomParticipant = getRandomParticipant();
+        items.push({ type: itemType, content: itemContent, participant: randomParticipant });
         document.getElementById('item-content').value = '';
+        alert(`Élément ajouté pour ${randomParticipant}`);
+    } else {
+        alert('Contenu de l\'élément vide, aucun participant ajouté ou nombre maximum d\'éléments atteint.');
     }
 }
 
@@ -87,3 +95,9 @@ function drawItem() {
         document.getElementById('loading-animation').style.display = 'none';
     }, 1000);
 }
+
+// Ajoute des écouteurs d'événements
+document.getElementById('rules-link').addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche le comportement par défaut du lien
+    window.location.href = this.getAttribute('href'); // Redirige vers la page des règles
+});
