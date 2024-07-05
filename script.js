@@ -24,6 +24,7 @@ function updateParticipantsList() {
 
 function defineMaxElements() {
     maxElements = parseInt(document.getElementById('max-elements').value);
+    alert(`Nombre total de défis et questions défini à ${maxElements}`);
 }
 
 function reset() {
@@ -33,20 +34,37 @@ function reset() {
     currentParticipantIndex = 0;
     document.getElementById('participants').innerHTML = '';
     document.getElementById('draw-result').textContent = '';
+    document.getElementById('item-content').value = '';
+    document.getElementById('current-participant').textContent = '';
 }
 
 function addItem() {
+    if (participants.length === 0) {
+        alert('Veuillez ajouter des participants avant d\'ajouter des éléments.');
+        return;
+    }
+
     const itemType = document.getElementById('item-type').value;
     const itemContent = document.getElementById('item-content').value;
+
     if (itemContent && items.length < maxElements) {
         items.push({ type: itemType, content: itemContent });
         document.getElementById('item-content').value = '';
+
+        alert(`Élément ajouté par ${participants[currentParticipantIndex]}`);
         
         // Mise à jour de l'index du participant actuel pour le prochain élément
         currentParticipantIndex = (currentParticipantIndex + 1) % participants.length;
-        alert(`Élément ajouté par ${participants[currentParticipantIndex]}`);
+
+        if (items.length < maxElements) {
+            document.getElementById('current-participant').textContent = `C'est au tour de ${participants[currentParticipantIndex]} d'ajouter un élément.`;
+        } else {
+            document.getElementById('current-participant').textContent = 'Tous les éléments ont été ajoutés.';
+        }
+    } else if (items.length >= maxElements) {
+        alert('Le nombre maximum d\'éléments a été atteint.');
     } else {
-        alert('Contenu de l\'élément vide ou nombre maximum d\'éléments atteint.');
+        alert('Le contenu de l\'élément est vide.');
     }
 }
 
@@ -85,3 +103,9 @@ function drawItem() {
         document.getElementById('loading-animation').style.display = 'none';
     }, 1000);
 }
+
+// Ajoute des écouteurs d'événements
+document.getElementById('rules-link').addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche le comportement par défaut du lien
+    window.location.href = this.getAttribute('href'); // Redirige vers la page des règles
+});
